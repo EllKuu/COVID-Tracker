@@ -146,6 +146,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("selected row")
+       
+        let vc = SingleDayViewController()
+        vc.scope = scope
+        vc.date = dayData[indexPath.row].date
+        
+        let navVC = UINavigationController(rootViewController: vc)
+        navVC.modalPresentationStyle = .fullScreen
+        present(navVC, animated: true, completion: nil)
+        
     }
     
     

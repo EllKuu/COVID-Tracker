@@ -42,6 +42,55 @@ class APICaller {
     enum DataScope {
         case national
         case state(State)
+        
+    }
+    
+    public func getSingleDayData(
+        for scope: DataScope,
+        for date: Date,
+        completion: @escaping (Result<SingleDayData, Error>) -> Void
+    ){
+//        print("in API call")
+//        print(scope)
+//        print(date)
+        
+        let dateString = DateFormatter()
+        dateString.dateFormat = "YYYY-MM-dd"
+        print(dateString.string(from: date))
+        let formatDate = dateString.string(from: date)
+        
+        let urlString: String
+        switch scope {
+        case .national:
+            urlString =  "https://api.covidtracking.com/v2/us/daily/\(formatDate)/simple.json"
+        case .state(let state):
+            urlString =  "https://api.covidtracking.com/v2/states/\(state.state_code.lowercased())/\(formatDate)/simple.json"
+        }
+        
+        guard let url = URL(string: urlString) else { return }
+        print(url)
+        
+        let task = URLSession.shared.dataTask(with: url){ data, _, error in
+            guard let data = data , error == nil else { return }
+                
+                do {
+                    let result = try JSONDecoder().decode(SingleDayCovidDataResponse.self, from: data)
+                    print(result.data)
+                    let caseTotal = result.data.cases?.total ?? 0
+                    let icuTotal = result.data.outcomes?.hospitalized?.in_icu?.currently ?? 0
+                    let ventilatorTotal = result.data.outcomes?.hospitalized?.on_ventilator?.currently ?? 0
+                    let deathTotal = result.data.outcomes?.death?.total ?? 0
+                    
+                    let singleDayData = SingleDayData(total: caseTotal, icu: icuTotal, ventilator: ventilatorTotal, deaths: deathTotal)
+                    
+                    completion(.success(singleDayData))
+                   
+                }catch{
+                    completion(.failure(error))
+                }
+            }
+        task.resume()
+            
     }
     
     public func getCovidData(
@@ -106,6 +155,8 @@ class APICaller {
 
 // MARK: Models
 
+
+// MARK: State Codes
 struct StateListResponse: Codable{
     let data: [State]
 }
@@ -114,6 +165,8 @@ struct State: Codable {
     let name: String
     let state_code: String
 }
+
+// MARK: Historic data
 
 struct CovidDataResponse: Codable{
     let data: [CovidDayData]
@@ -135,4 +188,51 @@ struct TotalCases: Codable {
 struct DayData{
     let date: Date
     let count: Int
+}
+
+// MARK: Single Day Data
+
+struct SingleDayCovidDataResponse: Codable{
+    let data: SingleDayCovidData
+}
+
+struct SingleDayCovidData: Codable{
+    let cases: SingleDayTotalCovidCases?
+    let outcomes: SingleDayOutcomes?
+}
+
+struct SingleDayTotalCovidCases: Codable{
+    let total: Int?
+    let confirmed: Int?
+    let probable: Int?
+}
+
+struct SingleDayOutcomes: Codable{
+    let hospitalized: SingleDayHospitilizations?
+    let death: SingleDayDeaths?
+
+}
+
+struct SingleDayHospitilizations: Codable{
+    let in_icu: SingleDayICU?
+    let on_ventilator: SingleDayVentilator?
+}
+
+struct SingleDayICU: Codable{
+    let currently: Int?
+}
+
+struct SingleDayVentilator: Codable{
+    let currently: Int?
+}
+
+struct SingleDayDeaths: Codable{
+    let total: Int?
+}
+
+struct SingleDayData{
+    var total: Int
+    var icu: Int
+    var ventilator: Int
+    var deaths: Int
 }

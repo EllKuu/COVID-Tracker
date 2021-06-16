@@ -16,6 +16,7 @@
 		B29D9E272676837C0013BDB9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B29D9E252676837C0013BDB9 /* LaunchScreen.storyboard */; };
 		B29D9E2F2676858C0013BDB9 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29D9E2E2676858C0013BDB9 /* FilterViewController.swift */; };
 		B29D9E31267687470013BDB9 /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29D9E30267687470013BDB9 /* APICaller.swift */; };
+		B29D9E342678D9F00013BDB9 /* SingleDayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29D9E332678D9F00013BDB9 /* SingleDayViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		B29D9E282676837C0013BDB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B29D9E2E2676858C0013BDB9 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		B29D9E30267687470013BDB9 /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
+		B29D9E332678D9F00013BDB9 /* SingleDayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleDayViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 				B29D9E1C2676837A0013BDB9 /* SceneDelegate.swift */,
 				B29D9E1E2676837A0013BDB9 /* ViewController.swift */,
 				B29D9E2E2676858C0013BDB9 /* FilterViewController.swift */,
+				B29D9E332678D9F00013BDB9 /* SingleDayViewController.swift */,
 				B29D9E30267687470013BDB9 /* APICaller.swift */,
 				B29D9E202676837A0013BDB9 /* Main.storyboard */,
 				B29D9E232676837C0013BDB9 /* Assets.xcassets */,
@@ -86,7 +89,6 @@
 				890D89E27F9E4F87E090D034 /* Pods-COVID Tracker.debug.xcconfig */,
 				3CA18E832D97F94715623FF0 /* Pods-COVID Tracker.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -144,7 +146,7 @@
 			);
 			mainGroup = B29D9E0E2676837A0013BDB9;
 			packageReferences = (
-				B29D9E3226769BE00013BDB9 /* RemoteSwiftPackageReference */,
+				B29D9E3226769BE00013BDB9 /* XCRemoteSwiftPackageReference "Charts" */,
 			);
 			productRefGroup = B29D9E182676837A0013BDB9 /* Products */;
 			projectDirPath = "";
@@ -216,6 +218,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B29D9E1F2676837A0013BDB9 /* ViewController.swift in Sources */,
+				B29D9E342678D9F00013BDB9 /* SingleDayViewController.swift in Sources */,
 				B29D9E1B2676837A0013BDB9 /* AppDelegate.swift in Sources */,
 				B29D9E2F2676858C0013BDB9 /* FilterViewController.swift in Sources */,
 				B29D9E31267687470013BDB9 /* APICaller.swift in Sources */,
@@ -429,7 +432,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B29D9E3226769BE00013BDB9 /* RemoteSwiftPackageReference */ = {
+		B29D9E3226769BE00013BDB9 /* XCRemoteSwiftPackageReference "Charts" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/danielgindi/Charts";
 			requirement = {
