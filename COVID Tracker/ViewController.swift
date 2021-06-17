@@ -63,7 +63,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.width/1.5))
         headerView.clipsToBounds = true
         
-        let set = dayData.prefix(30)
+        let set = dayData.prefix(10)
         var entries: [BarChartDataEntry] = []
         for index in 0..<set.count{
             let data = set[index]
@@ -79,6 +79,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         let chart = BarChartView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.width/1.5))
         chart.data = data
+        chart.rightAxis.enabled = false
         
         
         
@@ -113,11 +114,25 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             case .national:
                 return "National"
             case .state(let state):
+                createClearFilterButton()
                 return state.name
             }
         }()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: buttonTitle, style: .done, target: self, action: #selector(didTapFilter))
+    }
+    
+    private func createClearFilterButton(){
+        let buttonTitle: String = "Clear Filter"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: buttonTitle, style: .done, target: self, action: #selector(clearFilter))
+    }
+    
+    @objc private func clearFilter(){
+        scope = .national
+        fetchData()
+        
+        createFilterButton()
+        navigationItem.leftBarButtonItem = nil
     }
     
     @objc private func didTapFilter(){
@@ -154,7 +169,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let navVC = UINavigationController(rootViewController: vc)
         navVC.modalPresentationStyle = .fullScreen
         present(navVC, animated: true, completion: nil)
-        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     

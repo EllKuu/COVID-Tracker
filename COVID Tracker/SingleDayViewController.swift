@@ -75,7 +75,7 @@ class SingleDayViewController: UIViewController {
 
 extension SingleDayViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -83,12 +83,18 @@ extension SingleDayViewController: UITableViewDataSource{
         
         switch indexPath.row {
         case 0:
-            cell.textLabel?.text = "Total Cases: \(singleDayData?.total ?? 0)"
+            if let date = date{
+                let dateString = dateFormatter(date: date)
+                cell.textLabel?.text = "Date: \(dateString)"
+            }
+            
         case 1:
-            cell.textLabel?.text = "Total in ICU: \(singleDayData?.icu ?? 0)"
+            cell.textLabel?.text = "Total Cases: \(singleDayData?.total ?? 0)"
         case 2:
-            cell.textLabel?.text = "Total on Ventilator: \(singleDayData?.ventilator ?? 0)"
+            cell.textLabel?.text = "Total in ICU: \(singleDayData?.icu ?? 0)"
         case 3:
+            cell.textLabel?.text = "Total on Ventilator: \(singleDayData?.ventilator ?? 0)"
+        case 4:
             cell.textLabel?.text = "Total Deaths: \(singleDayData?.deaths ?? 0)"
         default:
             print("unexpected case")
@@ -96,6 +102,14 @@ extension SingleDayViewController: UITableViewDataSource{
         
         return cell
     
+    }
+    
+    func dateFormatter(date: Date) -> String{
+        let dateString = DateFormatter()
+        dateString.dateFormat = "YYYY-MM-dd"
+        let formatDate = dateString.string(from: date)
+        
+        return formatDate
     }
     
     
